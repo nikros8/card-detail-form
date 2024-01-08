@@ -4,3 +4,8 @@ body {
   background: linear-gradient(to bottom, transparent 238px, hsl(0, 0%, 100%) 238px),
     url("/assets/images/bg-main-desktop.png") center/cover no-repeat;
 }
+
+input {
+  padding: 0;
+  box-sizing: border-box;
+}
