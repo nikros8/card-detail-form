@@ -1,0 +1,6 @@
+body {
+  margin: 0;
+  height: 100vh;
+  background: linear-gradient(to bottom, transparent 238px, hsl(0, 0%, 100%) 238px),
+    url("/assets/images/bg-main-desktop.png") center/cover no-repeat;
+}
