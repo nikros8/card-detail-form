@@ -37,12 +37,17 @@ const inputs: Inputs = reactive({
   },
   cardCVC: {
     title: "CVC",
-    type: "number",
+    type: "text",
     value: "",
     placeholder: "e.g. 123",
     width: "100%",
     height: "45px",
   },
+})
+const emits = defineEmits(["inputs"])
+
+watch(inputs, () => {
+  emits("inputs", inputs)
 })
 
 function submit() {
@@ -54,7 +59,7 @@ function submit() {
     <form @submit.prevent="submit" name="card-detail">
       <div class="inputs-container">
         <Input
-          v-model="inputs.cardHolderNameInput.value"
+          v-model:input-value="inputs.cardHolderNameInput.value"
           :type="inputs.cardHolderNameInput.type"
           :title="inputs.cardHolderNameInput.title"
           :value="inputs.cardHolderNameInput.value"
@@ -63,7 +68,7 @@ function submit() {
           :height="inputs.cardHolderNameInput.height"
         />
         <Input
-          v-model="inputs.cardNumberInput.value"
+          v-model:input-value="inputs.cardNumberInput.value"
           :type="inputs.cardNumberInput.type"
           :title="inputs.cardNumberInput.title"
           :value="inputs.cardNumberInput.value"
@@ -73,7 +78,7 @@ function submit() {
         />
         <div class="inputs-row">
           <Input
-            v-model="inputs.cardExpirationMonth.value"
+            v-model:input-value="inputs.cardExpirationMonth.value"
             style="flex: 0 0 23%"
             :type="inputs.cardExpirationMonth.type"
             :title="inputs.cardExpirationMonth.title"
@@ -84,7 +89,7 @@ function submit() {
             :height="inputs.cardExpirationMonth.height"
           />
           <Input
-            v-model="inputs.cardExpirationYear.value"
+            v-model:input-value="inputs.cardExpirationYear.value"
             style="flex: 0 0 24%"
             :type="inputs.cardExpirationYear.type"
             :title="inputs.cardExpirationYear.title"
@@ -94,7 +99,7 @@ function submit() {
             :height="inputs.cardExpirationYear.height"
           />
           <Input
-            v-model="inputs.cardCVC.value"
+            v-model:input-value="inputs.cardCVC.value"
             style="flex: 0 1 50%"
             :type="inputs.cardCVC.type"
             :title="inputs.cardCVC.title"
@@ -107,6 +112,7 @@ function submit() {
       <button type="submit">Confirm</button>
     </form>
   </div>
+  <h1>{{ inputs.cardExpirationYear.value }}</h1>
 </template>
 <style scoped>
 .card-detail-form {

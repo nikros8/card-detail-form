@@ -1,13 +1,25 @@
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import { ref } from "vue"
+import { type Inputs } from "../types/index"
+
+const sharedState = ref({
+  cardCVCValue: "",
+})
+
+function handleMyEvent(inputs: Inputs) {
+  sharedState.value.cardCVCValue = inputs.cardCVC.value
+}
+</script>
 <template>
   <main>
     <div class="container">
       <div class="cards">
-        <cardBack />
+        <cardBack :cvc="sharedState.cardCVCValue" />
         <cardFront />
       </div>
-      <cardDetailForm />
+      <cardDetailForm @inputs="handleMyEvent" />
     </div>
+    <h1></h1>
   </main>
 </template>
 <style scoped>

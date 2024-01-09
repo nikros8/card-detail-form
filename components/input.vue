@@ -8,13 +8,13 @@ const props = defineProps({
   height: { type: String, required: true },
 })
 
-const model = defineModel()
+const inputValue = defineModel("inputValue")
 </script>
 <template>
   <div class="input">
     <div v-if="title" class="title">{{ title }}</div>
     <input
-      v-model="model"
+      v-model="inputValue"
       :type="props.type"
       :placeholder="props.placeholder"
       :max="props.maxNumber"

@@ -1,8 +1,12 @@
-<script setup lang="ts"></script>
+<script setup lang="ts">
+const props = defineProps({
+  cvc: String,
+})
+</script>
 <template>
   <div class="card-back">
     <div class="card-cvc-container">
-      <div class="card-cvc">000</div>
+      <div class="card-cvc">{{ props.cvc || "0000" }}</div>
     </div>
   </div>
 </template>
