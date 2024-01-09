@@ -26,6 +26,6 @@ main {
   flex-direction: column;
   align-items: center;
   height: 250px;
-  margin-top: 30px;
+  margin-top: 32px;
 }
 </style>

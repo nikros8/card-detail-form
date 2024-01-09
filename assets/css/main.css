@@ -1,11 +1,16 @@
+@import url("https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500&display=swap");
 body {
+  font-family: "Space Grotesk", sans-serif;
+  font-weight: 500;
   margin: 0;
   height: 100vh;
-  background: linear-gradient(to bottom, transparent 238px, hsl(0, 0%, 100%) 238px),
+  background: linear-gradient(to bottom, transparent 240px, hsl(0, 0%, 100%) 240px),
     url("/assets/images/bg-main-desktop.png") center/cover no-repeat;
 }
 
 input {
+  border: 1px solid hsl(270, 3%, 87%);
+  border-radius: 8px;
   padding: 0;
   box-sizing: border-box;
 }
