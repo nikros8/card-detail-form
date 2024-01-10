@@ -6,7 +6,7 @@ const props = defineProps({
 <template>
   <div class="card-back">
     <div class="card-cvc-container">
-      <div class="card-cvc">{{ props.cvc || "0000" }}</div>
+      <div class="card-cvc">{{ props.cvc || "000" }}</div>
     </div>
   </div>
 </template>

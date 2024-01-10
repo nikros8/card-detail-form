@@ -12,9 +12,10 @@ const inputs: Inputs = reactive({
   },
   cardNumberInput: {
     title: "CARD NUMBER",
-    type: "number",
+    type: "text",
     value: "",
     placeholder: "e.g. 1234 5678 9123 0000",
+    maxNumber: 16,
     width: "100%",
     height: "45px",
   },
@@ -37,7 +38,7 @@ const inputs: Inputs = reactive({
   },
   cardCVC: {
     title: "CVC",
-    type: "text",
+    type: "number",
     value: "",
     placeholder: "e.g. 123",
     width: "100%",
@@ -46,9 +47,22 @@ const inputs: Inputs = reactive({
 })
 const emits = defineEmits(["inputs"])
 
+/// Watch when any input value changes
 watch(inputs, () => {
   emits("inputs", inputs)
 })
+
+function formatNumber(event: KeyboardEvent, maxlength: number) {
+  const inputValue = (event.target as HTMLInputElement).value
+
+  // Check if the pressed key is a digit and the total number of digits (excluding spaces) is less than or equal to 16
+  if (
+    (event.key.length === 1 && isNaN(Number(event.key))) ||
+    inputValue.replace(/\s/g, "").length >= maxlength
+  ) {
+    event.preventDefault()
+  }
+}
 
 function submit() {
   console.log("DONE")
@@ -62,7 +76,6 @@ function submit() {
           v-model:input-value="inputs.cardHolderNameInput.value"
           :type="inputs.cardHolderNameInput.type"
           :title="inputs.cardHolderNameInput.title"
-          :value="inputs.cardHolderNameInput.value"
           :placeholder="inputs.cardHolderNameInput.placeholder"
           :width="inputs.cardHolderNameInput.width"
           :height="inputs.cardHolderNameInput.height"
@@ -71,7 +84,8 @@ function submit() {
           v-model:input-value="inputs.cardNumberInput.value"
           :type="inputs.cardNumberInput.type"
           :title="inputs.cardNumberInput.title"
-          :value="inputs.cardNumberInput.value"
+          :formatNumber="(event) => formatNumber(event, 16)"
+          :maxNumber="inputs.cardNumberInput.maxNumber"
           :placeholder="inputs.cardNumberInput.placeholder"
           :width="inputs.cardNumberInput.width"
           :height="inputs.cardNumberInput.height"
@@ -82,7 +96,7 @@ function submit() {
             style="flex: 0 0 23%"
             :type="inputs.cardExpirationMonth.type"
             :title="inputs.cardExpirationMonth.title"
-            :value="inputs.cardExpirationMonth.value"
+            :formatNumber="(event) => formatNumber(event, 2)"
             :placeholder="inputs.cardExpirationMonth.placeholder"
             :maxNumber="inputs.cardExpirationMonth.maxNumber"
             :width="inputs.cardExpirationMonth.width"
@@ -93,7 +107,7 @@ function submit() {
             style="flex: 0 0 24%"
             :type="inputs.cardExpirationYear.type"
             :title="inputs.cardExpirationYear.title"
-            :value="inputs.cardExpirationYear.value"
+            :formatNumber="(event) => formatNumber(event, 2)"
             :placeholder="inputs.cardExpirationYear.placeholder"
             :width="inputs.cardExpirationYear.width"
             :height="inputs.cardExpirationYear.height"
@@ -103,6 +117,7 @@ function submit() {
             style="flex: 0 1 50%"
             :type="inputs.cardCVC.type"
             :title="inputs.cardCVC.title"
+            :formatNumber="(event) => formatNumber(event, 4)"
             :placeholder="inputs.cardCVC.placeholder"
             :width="inputs.cardCVC.width"
             :height="inputs.cardCVC.height"
@@ -112,7 +127,6 @@ function submit() {
       <button type="submit">Confirm</button>
     </form>
   </div>
-  <h1>{{ inputs.cardExpirationYear.value }}</h1>
 </template>
 <style scoped>
 .card-detail-form {

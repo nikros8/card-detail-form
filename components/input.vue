@@ -3,6 +3,10 @@ const props = defineProps({
   title: String,
   type: { type: String, required: true },
   placeholder: String,
+  pattern: String,
+  formatNumber: Function as PropType<
+    ((event: KeyboardEvent, maxlength: number) => void) | undefined
+  >, // Specify function signature or undefined
   maxNumber: Number,
   width: { type: String, required: true },
   height: { type: String, required: true },
@@ -11,19 +15,27 @@ const props = defineProps({
 const inputValue = defineModel("inputValue")
 </script>
 <template>
-  <div class="input">
+  <div class="input-container">
     <div v-if="title" class="title">{{ title }}</div>
     <input
       v-model="inputValue"
       :type="props.type"
+      @keypress="props.formatNumber"
       :placeholder="props.placeholder"
-      :max="props.maxNumber"
+      :pattern="props.pattern"
+      :maxlength="props.maxNumber"
       :style="{ width: props.width, height: props.height }"
     />
+    <div class="error">Error example</div>
   </div>
 </template>
 <style scoped>
-.title {
+.input-container .error {
+  position: absolute;
+  font-size: 10px;
+  color: #d46879;
+}
+.input-container .title {
   color: hsl(278, 68%, 11%);
   font-size: 12px;
   font-weight: 600;

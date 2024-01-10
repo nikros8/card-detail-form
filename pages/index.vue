@@ -1,21 +1,35 @@
 <script setup lang="ts">
-import { ref } from "vue"
+import { reactive, ref } from "vue"
 import { type Inputs } from "../types/index"
+import { type CardDetail } from "../types/index"
 
-const sharedState = ref({
-  cardCVCValue: "",
+const cardDetails = reactive<CardDetail>({
+  cardHolderName: "",
+  cardNumber: "",
+  cardExpirationMonth: "",
+  cardExpirationYear: "",
+  cvc: "",
 })
 
 function handleMyEvent(inputs: Inputs) {
-  sharedState.value.cardCVCValue = inputs.cardCVC.value
+  cardDetails.cardHolderName = String(inputs.cardHolderNameInput.value)
+  cardDetails.cardNumber = String(inputs.cardNumberInput.value)
+  cardDetails.cardExpirationMonth = String(inputs.cardExpirationMonth.value)
+  cardDetails.cardExpirationYear = String(inputs.cardExpirationYear.value)
+  cardDetails.cvc = String(inputs.cardCVC.value)
 }
 </script>
 <template>
   <main>
     <div class="container">
       <div class="cards">
-        <cardBack :cvc="sharedState.cardCVCValue" />
-        <cardFront />
+        <cardBack :cvc="cardDetails.cvc" />
+        <cardFront
+          :cardNumber="cardDetails.cardNumber"
+          :cardHolderName="cardDetails.cardHolderName"
+          :cardExpirationMonth="cardDetails.cardExpirationMonth"
+          :cardExpirationYear="cardDetails.cardExpirationYear"
+        />
       </div>
       <cardDetailForm @inputs="handleMyEvent" />
     </div>

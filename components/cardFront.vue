@@ -1,4 +1,16 @@
-<script setup lang="ts"></script>
+<script setup lang="ts">
+const props = defineProps({
+  cardNumber: String,
+  cardHolderName: String,
+  cardExpirationMonth: String,
+  cardExpirationYear: String,
+})
+function addSpacesToDigits(digits: string | undefined): string {
+  return digits ? digits.replace(/(\d{4})/g, "$1 ").trim() : ""
+}
+const formattedCardNumber = computed(() => addSpacesToDigits(props.cardNumber) || null)
+console.log(formattedCardNumber.value)
+</script>
 <template>
   <div class="card-front">
     <div class="circles-container">
@@ -6,10 +18,23 @@
       <div class="small-circle"></div>
     </div>
     <div class="card-details">
-      <div class="card-number">0000 0000 0000 0000</div>
+      <div class="card-number">
+        <div
+          v-if="formattedCardNumber"
+          v-for="char in formattedCardNumber"
+          :class="char === ' ' ? 'space' : 'digit'"
+        >
+          {{ char }}
+        </div>
+        <div v-else style="letter-spacing: 2.2px">0000 0000 0000 0000</div>
+      </div>
       <div class="container">
-        <div class="card-holder-name">JANE APPLESEED</div>
-        <div class="card-expire-date">00/00</div>
+        <div class="card-holder-name">
+          {{ props.cardHolderName?.toUpperCase() || "JANE APPLESEED" }}
+        </div>
+        <div class="card-expire-date">
+          {{ props.cardExpirationMonth || "00" }}{{ "/" }}{{ props.cardExpirationYear || "00" }}
+        </div>
       </div>
     </div>
   </div>
@@ -58,11 +83,15 @@
   color: #f2e5f3;
 }
 .card-front .card-details .card-number {
-  align-self: center;
-  margin-right: 2px;
+  display: flex;
   margin-bottom: 15px;
   font-size: 18px;
-  letter-spacing: 2.2px;
+}
+.card-front .card-details .card-number .digit {
+  width: 14px;
+}
+.card-front .card-details .card-number .space {
+  width: 6px;
 }
 .card-front .card-details .container {
   display: flex;
