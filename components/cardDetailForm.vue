@@ -54,25 +54,6 @@ enum Errors {
   isWrongFormat = "Wrong format",
 }
 
-const emits = defineEmits(["inputs"])
-
-/// Watch when any input value changes
-watch(inputs, () => {
-  emits("inputs", inputs)
-})
-
-function formatNumber(event: KeyboardEvent, maxlength: number) {
-  const inputValue = (event.target as HTMLInputElement).value
-
-  // Check if the pressed key is a digit and the total number of digits (excluding spaces) is less than or equal to 16
-  if (
-    (event.key.length === 1 && isNaN(Number(event.key))) ||
-    inputValue.replace(/\s/g, "").length >= maxlength
-  ) {
-    event.preventDefault()
-  }
-}
-
 function submit() {
   const entries = Object.entries(store)
   entries.forEach(([key, value]) => {
@@ -94,62 +75,65 @@ function submit() {
   <div class="card-detail-form">
     <form @submit.prevent="submit" name="card-detail">
       <div class="inputs-container">
-        <Input
+        <BaseInput
           v-model:input-value="store.cardHolderName"
           :type="inputs.cardHolderName.type"
           :title="inputs.cardHolderName.title"
           :error="inputs.cardHolderName.error"
+          :formatInput="(event) => formatInput(event, 24, false)"
           :placeholder="inputs.cardHolderName.placeholder"
           :width="inputs.cardHolderName.width"
           :height="inputs.cardHolderName.height"
         />
-        <Input
+        <BaseInput
           v-model:input-value="store.cardNumber"
           :type="inputs.cardNumber.type"
           :title="inputs.cardNumber.title"
           :error="inputs.cardNumber.error"
-          :formatNumber="(event) => formatNumber(event, 16)"
+          :formatInput="(event) => formatInput(event, 16, true)"
           :placeholder="inputs.cardNumber.placeholder"
           :width="inputs.cardNumber.width"
           :height="inputs.cardNumber.height"
         />
         <div class="inputs-row">
-          <Input
+          <BaseInput
             v-model:input-value="store.cardExpirationMonth"
             style="flex: 0 0 23%"
             :type="inputs.cardExpirationMonth.type"
             :title="inputs.cardExpirationMonth.title"
             :error="inputs.cardExpirationMonth.error"
-            :formatNumber="(event) => formatNumber(event, 2)"
+            :formatInput="(event) => formatInput(event, 2, true)"
             :placeholder="inputs.cardExpirationMonth.placeholder"
             :width="inputs.cardExpirationMonth.width"
             :height="inputs.cardExpirationMonth.height"
           />
-          <Input
+          <BaseInput
             v-model:input-value="store.cardExpirationYear"
             style="flex: 0 0 24%"
             :type="inputs.cardExpirationYear.type"
             :title="inputs.cardExpirationYear.title"
             :error="inputs.cardExpirationYear.error"
-            :formatNumber="(event) => formatNumber(event, 2)"
+            :formatInput="(event) => formatInput(event, 2, true)"
             :placeholder="inputs.cardExpirationYear.placeholder"
             :width="inputs.cardExpirationYear.width"
             :height="inputs.cardExpirationYear.height"
           />
-          <Input
+          <BaseInput
             v-model:input-value="store.cardCVC"
             style="flex: 0 1 50%"
             :type="inputs.cardCVC.type"
             :title="inputs.cardCVC.title"
             :error="inputs.cardCVC.error"
-            :formatNumber="(event) => formatNumber(event, 4)"
+            :formatInput="(event) => formatInput(event, 3, true)"
             :placeholder="inputs.cardCVC.placeholder"
             :width="inputs.cardCVC.width"
             :height="inputs.cardCVC.height"
           />
         </div>
       </div>
-      <button type="submit">Confirm</button>
+      <NuxtLink :to="{ path: '/card-details-completion' }">
+        <BaseButton />
+      </NuxtLink>
     </form>
   </div>
 </template>
@@ -162,17 +146,6 @@ function submit() {
 .card-detail-form form {
   max-width: 327px;
   width: 100%;
-}
-.card-detail-form form button {
-  background-color: hsl(278, 68%, 11%);
-  color: hsl(270, 3%, 87%);
-  font-size: 17px;
-  letter-spacing: 1.3px;
-  width: 100%;
-  height: 53px;
-  margin-top: 28px;
-  border: none;
-  border-radius: 8px;
 }
 .card-detail-form form .inputs-container {
   display: flex;

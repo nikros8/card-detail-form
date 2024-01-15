@@ -4,7 +4,7 @@ const props = defineProps({
   type: { type: String, required: true },
   placeholder: String,
   error: String,
-  formatNumber: Function as PropType<
+  formatInput: Function as PropType<
     ((event: KeyboardEvent, maxlength: number) => void) | undefined
   >, // Specify function signature or undefined
   width: { type: String, required: true },
@@ -20,7 +20,7 @@ const inputValue = defineModel("inputValue")
       v-model="inputValue"
       :type="props.type"
       :error="props.error"
-      @keypress="props.formatNumber"
+      @keypress="props.formatInput"
       :placeholder="props.placeholder"
       :style="{ width: props.width, height: props.height }"
     />
