@@ -8,9 +8,21 @@ body {
     url("/assets/images/bg-main-desktop.png") center/cover no-repeat;
 }
 
+main {
+  display: flex;
+  justify-content: center;
+}
+
 input {
   border: 1px solid hsl(270, 3%, 87%);
   border-radius: 8px;
   padding: 0;
   box-sizing: border-box;
+}
+
+.container-main {
+  max-width: 345px;
+  width: 100%;
+  margin-left: 16px;
+  margin-right: 16px;
 }

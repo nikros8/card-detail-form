@@ -2,6 +2,8 @@
 import { type Inputs } from "@/types/index"
 import { store } from "@/store/store.js"
 
+const router = useRouter()
+
 const inputs: Inputs = reactive({
   cardHolderName: {
     title: "CARDHOLDER NAME",
@@ -54,21 +56,31 @@ enum Errors {
   isWrongFormat = "Wrong format",
 }
 
-function submit() {
-  const entries = Object.entries(store)
-  entries.forEach(([key, value]) => {
+function isInputValid(): boolean {
+  const isValid = ref(true)
+  const cardDetails = Object.entries(store)
+  cardDetails.forEach(([key, value]) => {
     if (String(value).length < 1) {
       inputs[key].error = Errors.isEmpty
+      isValid.value = false
     } else if (
       inputs[key].definedLength &&
       String(value).length > 0 &&
       String(value).length !== inputs[key].definedLength
     ) {
       inputs[key].error = Errors.isWrongFormat
+      isValid.value = false
     } else {
       inputs[key].error = ""
     }
   })
+  return isValid.value
+}
+
+function submit() {
+  if (isInputValid()) {
+    router.push({ path: "/completed" })
+  }
 }
 </script>
 <template>
@@ -131,9 +143,7 @@ function submit() {
           />
         </div>
       </div>
-      <NuxtLink :to="{ path: '/card-details-completion' }">
-        <BaseButton />
-      </NuxtLink>
+      <BaseButton value="Confirm" />
     </form>
   </div>
 </template>

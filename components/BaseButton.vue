@@ -1,5 +1,11 @@
+<script setup lang="ts">
+defineProps({
+  value: { type: String, required: true },
+})
+</script>
+
 <template>
-  <button type="submit">Confirm</button>
+  <button type="submit">{{ value }}</button>
 </template>
 
 <style scope>

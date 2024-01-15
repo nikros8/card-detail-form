@@ -1,17 +1,10 @@
 <script setup lang="ts">
 import { store } from "@/store/store.js"
 
-// const props = defineProps({
-//   cardNumber: String,
-//   cardHolderName: String,
-//   cardExpirationMonth: String,
-//   cardExpirationYear: String,
-// })
 function addSpacesToDigits(digits: string | undefined): string {
   return digits ? digits.replace(/(\d{4})/g, "$1 ").trim() : ""
 }
 const formattedCardNumber = computed(() => addSpacesToDigits(store.cardNumber) || null)
-console.log(formattedCardNumber.value)
 </script>
 <template>
   <div class="card-front">
@@ -102,7 +95,5 @@ console.log(formattedCardNumber.value)
   justify-content: space-between;
   font-size: 10px;
   letter-spacing: 0.7px;
-}
-.card-front .card-details .container .card-holder-name {
 }
 </style>
