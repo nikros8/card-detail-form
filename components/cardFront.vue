@@ -1,14 +1,16 @@
 <script setup lang="ts">
-const props = defineProps({
-  cardNumber: String,
-  cardHolderName: String,
-  cardExpirationMonth: String,
-  cardExpirationYear: String,
-})
+import { store } from "@/store/store.js"
+
+// const props = defineProps({
+//   cardNumber: String,
+//   cardHolderName: String,
+//   cardExpirationMonth: String,
+//   cardExpirationYear: String,
+// })
 function addSpacesToDigits(digits: string | undefined): string {
   return digits ? digits.replace(/(\d{4})/g, "$1 ").trim() : ""
 }
-const formattedCardNumber = computed(() => addSpacesToDigits(props.cardNumber) || null)
+const formattedCardNumber = computed(() => addSpacesToDigits(store.cardNumber) || null)
 console.log(formattedCardNumber.value)
 </script>
 <template>
@@ -30,10 +32,10 @@ console.log(formattedCardNumber.value)
       </div>
       <div class="container">
         <div class="card-holder-name">
-          {{ props.cardHolderName?.toUpperCase() || "JANE APPLESEED" }}
+          {{ store.cardHolderName?.toUpperCase() || "JANE APPLESEED" }}
         </div>
         <div class="card-expire-date">
-          {{ props.cardExpirationMonth || "00" }}{{ "/" }}{{ props.cardExpirationYear || "00" }}
+          {{ store.cardExpirationMonth || "00" }}{{ "/" }}{{ store.cardExpirationYear || "00" }}
         </div>
       </div>
     </div>

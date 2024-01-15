@@ -1,39 +1,39 @@
 <script setup lang="ts">
-import { reactive, ref } from "vue"
+import { reactive } from "vue"
 import { type Inputs } from "../types/index"
 import { type CardDetail } from "../types/index"
+import { store } from "@/store/store.js"
 
-const cardDetails = reactive<CardDetail>({
-  cardHolderName: "",
-  cardNumber: "",
-  cardExpirationMonth: "",
-  cardExpirationYear: "",
-  cvc: "",
-})
+// const cardDetails = reactive<CardDetail>({
+//   cardHolderName: "",
+//   cardNumber: "",
+//   cardExpirationMonth: "",
+//   cardExpirationYear: "",
+//   cvc: "",
+// })
 
-function handleMyEvent(inputs: Inputs) {
-  cardDetails.cardHolderName = String(inputs.cardHolderNameInput.value)
-  cardDetails.cardNumber = String(inputs.cardNumberInput.value)
-  cardDetails.cardExpirationMonth = String(inputs.cardExpirationMonth.value)
-  cardDetails.cardExpirationYear = String(inputs.cardExpirationYear.value)
-  cardDetails.cvc = String(inputs.cardCVC.value)
-}
+// function handleMyEvent(inputs: Inputs) {
+//   cardDetails.cardHolderName = String(inputs.cardHolderNameInput.value)
+//   cardDetails.cardNumber = String(inputs.cardNumberInput.value)
+//   cardDetails.cardExpirationMonth = String(inputs.cardExpirationMonth.value)
+//   cardDetails.cardExpirationYear = String(inputs.cardExpirationYear.value)
+//   cardDetails.cvc = String(inputs.cardCVC.value)
+// }
 </script>
 <template>
   <main>
     <div class="container">
       <div class="cards">
-        <cardBack :cvc="cardDetails.cvc" />
+        <cardBack :cvc="store.cardCVC" />
         <cardFront
-          :cardNumber="cardDetails.cardNumber"
-          :cardHolderName="cardDetails.cardHolderName"
-          :cardExpirationMonth="cardDetails.cardExpirationMonth"
-          :cardExpirationYear="cardDetails.cardExpirationYear"
+          :cardNumber="store.cardNumber"
+          :cardHolderName="store.cardHolderName"
+          :cardExpirationMonth="store.cardExpirationMonth"
+          :cardExpirationYear="store.cardExpirationYear"
         />
       </div>
-      <cardDetailForm @inputs="handleMyEvent" />
+      <cardDetailForm />
     </div>
-    <h1></h1>
   </main>
 </template>
 <style scoped>

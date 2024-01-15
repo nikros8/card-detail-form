@@ -1,21 +1,20 @@
 <script setup lang="ts">
 import { type Inputs } from "@/types/index"
+import { store } from "@/store/store.js"
 
 const inputs: Inputs = reactive({
-  cardHolderNameInput: {
+  cardHolderName: {
     title: "CARDHOLDER NAME",
     type: "text",
-    value: "",
     error: "",
     placeholder: "e.g. Jane Appleseed",
     width: "100%",
     height: "45px",
   },
-  cardNumberInput: {
+  cardNumber: {
     title: "CARD NUMBER",
     type: "text",
     definedLength: 16,
-    value: "",
     error: "",
     placeholder: "e.g. 1234 5678 9123 0000",
     width: "100%",
@@ -25,7 +24,6 @@ const inputs: Inputs = reactive({
     title: "EXP. DATE",
     type: "number",
     definedLength: 2,
-    value: "",
     error: "",
     placeholder: "MM",
     width: "96%",
@@ -35,7 +33,6 @@ const inputs: Inputs = reactive({
     title: "(MM/YY)",
     type: "number",
     definedLength: 2,
-    value: "",
     error: "",
     placeholder: "YY",
     width: "91%",
@@ -45,7 +42,6 @@ const inputs: Inputs = reactive({
     title: "CVC",
     type: "number",
     definedLength: 3,
-    value: "",
     error: "",
     placeholder: "e.g. 123",
     width: "100%",
@@ -78,19 +74,20 @@ function formatNumber(event: KeyboardEvent, maxlength: number) {
 }
 
 function submit() {
-  for (const key in inputs) {
-    if (String(inputs[key].value).length < 1) {
+  const entries = Object.entries(store)
+  entries.forEach(([key, value]) => {
+    if (String(value).length < 1) {
       inputs[key].error = Errors.isEmpty
     } else if (
       inputs[key].definedLength &&
-      String(inputs[key].value).length > 0 &&
-      String(inputs[key].value).length !== inputs[key].definedLength
+      String(value).length > 0 &&
+      String(value).length !== inputs[key].definedLength
     ) {
       inputs[key].error = Errors.isWrongFormat
     } else {
       inputs[key].error = ""
     }
-  }
+  })
 }
 </script>
 <template>
@@ -98,27 +95,27 @@ function submit() {
     <form @submit.prevent="submit" name="card-detail">
       <div class="inputs-container">
         <Input
-          v-model:input-value="inputs.cardHolderNameInput.value"
-          :type="inputs.cardHolderNameInput.type"
-          :title="inputs.cardHolderNameInput.title"
-          :error="inputs.cardHolderNameInput.error"
-          :placeholder="inputs.cardHolderNameInput.placeholder"
-          :width="inputs.cardHolderNameInput.width"
-          :height="inputs.cardHolderNameInput.height"
+          v-model:input-value="store.cardHolderName"
+          :type="inputs.cardHolderName.type"
+          :title="inputs.cardHolderName.title"
+          :error="inputs.cardHolderName.error"
+          :placeholder="inputs.cardHolderName.placeholder"
+          :width="inputs.cardHolderName.width"
+          :height="inputs.cardHolderName.height"
         />
         <Input
-          v-model:input-value="inputs.cardNumberInput.value"
-          :type="inputs.cardNumberInput.type"
-          :title="inputs.cardNumberInput.title"
-          :error="inputs.cardNumberInput.error"
+          v-model:input-value="store.cardNumber"
+          :type="inputs.cardNumber.type"
+          :title="inputs.cardNumber.title"
+          :error="inputs.cardNumber.error"
           :formatNumber="(event) => formatNumber(event, 16)"
-          :placeholder="inputs.cardNumberInput.placeholder"
-          :width="inputs.cardNumberInput.width"
-          :height="inputs.cardNumberInput.height"
+          :placeholder="inputs.cardNumber.placeholder"
+          :width="inputs.cardNumber.width"
+          :height="inputs.cardNumber.height"
         />
         <div class="inputs-row">
           <Input
-            v-model:input-value="inputs.cardExpirationMonth.value"
+            v-model:input-value="store.cardExpirationMonth"
             style="flex: 0 0 23%"
             :type="inputs.cardExpirationMonth.type"
             :title="inputs.cardExpirationMonth.title"
@@ -129,7 +126,7 @@ function submit() {
             :height="inputs.cardExpirationMonth.height"
           />
           <Input
-            v-model:input-value="inputs.cardExpirationYear.value"
+            v-model:input-value="store.cardExpirationYear"
             style="flex: 0 0 24%"
             :type="inputs.cardExpirationYear.type"
             :title="inputs.cardExpirationYear.title"
@@ -140,7 +137,7 @@ function submit() {
             :height="inputs.cardExpirationYear.height"
           />
           <Input
-            v-model:input-value="inputs.cardCVC.value"
+            v-model:input-value="store.cardCVC"
             style="flex: 0 1 50%"
             :type="inputs.cardCVC.type"
             :title="inputs.cardCVC.title"

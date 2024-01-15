@@ -2,7 +2,6 @@ interface InputConfig {
   title: string
   definedLength?: number
   type: string
-  value: string | number | null
   error: string
   placeholder: string
   width: string

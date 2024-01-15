@@ -1,12 +1,14 @@
 <script setup lang="ts">
-const props = defineProps({
-  cvc: String,
-})
+import { store } from "@/store/store.js"
+
+// const props = defineProps({
+//   cvc: Number,
+// })
 </script>
 <template>
   <div class="card-back">
     <div class="card-cvc-container">
-      <div class="card-cvc">{{ props.cvc || "000" }}</div>
+      <div class="card-cvc">{{ store.cardCVC || "000" }}</div>
     </div>
   </div>
 </template>
