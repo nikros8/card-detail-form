@@ -1,9 +1,10 @@
 interface InputConfig {
   title: string
+  definedLength?: number
   type: string
   value: string | number | null
+  error: string
   placeholder: string
-  maxNumber?: number
   width: string
   height: string
 }
@@ -13,5 +14,5 @@ export interface Inputs {
 }
 
 export interface CardDetail {
-  [key: string]: string | number | null
+  [key: string]: string | undefined
 }

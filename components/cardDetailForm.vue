@@ -6,6 +6,7 @@ const inputs: Inputs = reactive({
     title: "CARDHOLDER NAME",
     type: "text",
     value: "",
+    error: "",
     placeholder: "e.g. Jane Appleseed",
     width: "100%",
     height: "45px",
@@ -13,25 +14,29 @@ const inputs: Inputs = reactive({
   cardNumberInput: {
     title: "CARD NUMBER",
     type: "text",
+    definedLength: 16,
     value: "",
+    error: "",
     placeholder: "e.g. 1234 5678 9123 0000",
-    maxNumber: 16,
     width: "100%",
     height: "45px",
   },
   cardExpirationMonth: {
     title: "EXP. DATE",
     type: "number",
+    definedLength: 2,
     value: "",
+    error: "",
     placeholder: "MM",
-    maxNumber: 99,
     width: "96%",
     height: "45px",
   },
   cardExpirationYear: {
     title: "(MM/YY)",
     type: "number",
+    definedLength: 2,
     value: "",
+    error: "",
     placeholder: "YY",
     width: "91%",
     height: "45px",
@@ -39,12 +44,20 @@ const inputs: Inputs = reactive({
   cardCVC: {
     title: "CVC",
     type: "number",
+    definedLength: 3,
     value: "",
+    error: "",
     placeholder: "e.g. 123",
     width: "100%",
     height: "45px",
   },
 })
+
+enum Errors {
+  isEmpty = "Can't be blank",
+  isWrongFormat = "Wrong format",
+}
+
 const emits = defineEmits(["inputs"])
 
 /// Watch when any input value changes
@@ -65,7 +78,19 @@ function formatNumber(event: KeyboardEvent, maxlength: number) {
 }
 
 function submit() {
-  console.log("DONE")
+  for (const key in inputs) {
+    if (String(inputs[key].value).length < 1) {
+      inputs[key].error = Errors.isEmpty
+    } else if (
+      inputs[key].definedLength &&
+      String(inputs[key].value).length > 0 &&
+      String(inputs[key].value).length !== inputs[key].definedLength
+    ) {
+      inputs[key].error = Errors.isWrongFormat
+    } else {
+      inputs[key].error = ""
+    }
+  }
 }
 </script>
 <template>
@@ -76,6 +101,7 @@ function submit() {
           v-model:input-value="inputs.cardHolderNameInput.value"
           :type="inputs.cardHolderNameInput.type"
           :title="inputs.cardHolderNameInput.title"
+          :error="inputs.cardHolderNameInput.error"
           :placeholder="inputs.cardHolderNameInput.placeholder"
           :width="inputs.cardHolderNameInput.width"
           :height="inputs.cardHolderNameInput.height"
@@ -84,8 +110,8 @@ function submit() {
           v-model:input-value="inputs.cardNumberInput.value"
           :type="inputs.cardNumberInput.type"
           :title="inputs.cardNumberInput.title"
+          :error="inputs.cardNumberInput.error"
           :formatNumber="(event) => formatNumber(event, 16)"
-          :maxNumber="inputs.cardNumberInput.maxNumber"
           :placeholder="inputs.cardNumberInput.placeholder"
           :width="inputs.cardNumberInput.width"
           :height="inputs.cardNumberInput.height"
@@ -96,9 +122,9 @@ function submit() {
             style="flex: 0 0 23%"
             :type="inputs.cardExpirationMonth.type"
             :title="inputs.cardExpirationMonth.title"
+            :error="inputs.cardExpirationMonth.error"
             :formatNumber="(event) => formatNumber(event, 2)"
             :placeholder="inputs.cardExpirationMonth.placeholder"
-            :maxNumber="inputs.cardExpirationMonth.maxNumber"
             :width="inputs.cardExpirationMonth.width"
             :height="inputs.cardExpirationMonth.height"
           />
@@ -107,6 +133,7 @@ function submit() {
             style="flex: 0 0 24%"
             :type="inputs.cardExpirationYear.type"
             :title="inputs.cardExpirationYear.title"
+            :error="inputs.cardExpirationYear.error"
             :formatNumber="(event) => formatNumber(event, 2)"
             :placeholder="inputs.cardExpirationYear.placeholder"
             :width="inputs.cardExpirationYear.width"
@@ -117,6 +144,7 @@ function submit() {
             style="flex: 0 1 50%"
             :type="inputs.cardCVC.type"
             :title="inputs.cardCVC.title"
+            :error="inputs.cardCVC.error"
             :formatNumber="(event) => formatNumber(event, 4)"
             :placeholder="inputs.cardCVC.placeholder"
             :width="inputs.cardCVC.width"
