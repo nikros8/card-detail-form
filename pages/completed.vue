@@ -9,7 +9,7 @@ import IconCompleteSVG from "@/assets/images/icon-complete.svg"
         <img :src="IconCompleteSVG" />
         <div class="title">THANK YOU!</div>
         <div class="info">We've added your card details</div>
-        <BaseButton value="Continue" />
+        <BaseButton class="button" value="Continue" />
       </div>
     </div>
   </main>
@@ -36,5 +36,15 @@ import IconCompleteSVG from "@/assets/images/icon-complete.svg"
   margin-top: 16px;
   margin-bottom: 20px;
   color: #908e91;
+}
+.result .button {
+  margin-top: 28px;
+}
+@media (min-width: 1100px) {
+  .result {
+    width: 380px;
+    margin-top: unset;
+    align-self: center;
+  }
 }
 </style>

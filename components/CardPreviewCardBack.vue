@@ -39,4 +39,24 @@ import { store } from "@/store/store.js"
   font-size: 10px;
   margin-right: 12px;
 }
+
+@media (min-width: 1100px) {
+  .card-back {
+    width: 447px;
+    height: 245px;
+    margin-left: 95px;
+  }
+  .card-back .card-cvc-container {
+    top: 101px;
+    left: 45px;
+    width: 350px;
+    height: 38px;
+    border-radius: 4px;
+  }
+  .card-back .card-cvc-container .card-cvc {
+    font-size: 15px;
+    letter-spacing: 1px;
+    margin-right: 6px;
+  }
+}
 </style>

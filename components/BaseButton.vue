@@ -16,7 +16,6 @@ button {
   letter-spacing: 1.3px;
   width: 100%;
   height: 53px;
-  margin-top: 28px;
   border: none;
   border-radius: 8px;
 }

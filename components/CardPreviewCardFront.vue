@@ -21,7 +21,7 @@ const formattedCardNumber = computed(() => addSpacesToDigits(store.cardNumber) |
         >
           {{ char }}
         </div>
-        <div v-else style="letter-spacing: 2.2px">0000 0000 0000 0000</div>
+        <div v-else class="card-number-placeholder">0000 0000 0000 0000</div>
       </div>
       <div class="container">
         <div class="card-holder-name">
@@ -82,6 +82,9 @@ const formattedCardNumber = computed(() => addSpacesToDigits(store.cardNumber) |
   margin-bottom: 15px;
   font-size: 18px;
 }
+.card-front .card-details .card-number .card-number-placeholder {
+  letter-spacing: 2.2px;
+}
 .card-front .card-details .card-number .digit {
   width: 14px;
 }
@@ -95,5 +98,40 @@ const formattedCardNumber = computed(() => addSpacesToDigits(store.cardNumber) |
   justify-content: space-between;
   font-size: 10px;
   letter-spacing: 0.7px;
+}
+@media (min-width: 1100px) {
+  .card-front {
+    position: unset;
+    top: unset;
+    width: 447px;
+    height: 245px;
+    padding: 28px 33px 25px 33px;
+  }
+  .card-front .circles-container .big-circle {
+    width: 47px;
+    height: 47px;
+  }
+  .card-front .circles-container .small-circle {
+    width: 19px;
+    height: 19px;
+    margin-left: 16px;
+  }
+  .card-front .card-details .card-number {
+    margin-bottom: 25px;
+    font-size: 27px;
+  }
+  .card-front .card-details .card-number .card-number-placeholder {
+    letter-spacing: 4px;
+  }
+  .card-front .card-details .container {
+    font-size: 15px;
+    letter-spacing: 1.2px;
+  }
+  .card-front .card-details .card-number .digit {
+    width: 21px;
+  }
+  .card-front .card-details .card-number .space {
+    width: 13px;
+  }
 }
 </style>

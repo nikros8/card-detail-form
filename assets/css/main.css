@@ -3,9 +3,9 @@ body {
   font-family: "Space Grotesk", sans-serif;
   font-weight: 500;
   margin: 0;
-  height: 100vh;
+  min-height: 100vh;
   background: linear-gradient(to bottom, transparent 240px, hsl(0, 0%, 100%) 240px),
-    url("/assets/images/bg-main-desktop.png") center/cover no-repeat;
+    url("/assets/images/bg-main-mobile.png") top/contain no-repeat;
 }
 
 main {
@@ -25,4 +25,22 @@ input {
   width: 100%;
   margin-left: 16px;
   margin-right: 16px;
+}
+
+@media (min-width: 1100px) {
+  body {
+    background: linear-gradient(to right, transparent 483px, hsl(0, 0%, 100%) 483px),
+      url("/assets/images/bg-main-desktop.png") left/contain no-repeat;
+  }
+  main {
+    min-height: 100vh;
+    align-items: center;
+  }
+  .container-main {
+    position: relative;
+    display: flex;
+    max-width: 1050px;
+    justify-content: space-between;
+    margin-right: 80px;
+  }
 }

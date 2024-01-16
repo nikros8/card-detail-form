@@ -132,6 +132,7 @@ function submit() {
           />
           <BaseInput
             v-model:input-value="store.cardCVC"
+            class="input-cvc"
             style="flex: 0 1 50%"
             :type="inputs.cardCVC.type"
             :title="inputs.cardCVC.title"
@@ -143,7 +144,7 @@ function submit() {
           />
         </div>
       </div>
-      <BaseButton value="Confirm" />
+      <BaseButton class="button" value="Confirm" />
     </form>
   </div>
 </template>
@@ -157,6 +158,9 @@ function submit() {
   max-width: 327px;
   width: 100%;
 }
+.card-detail-form form .button {
+  margin-top: 28px;
+}
 .card-detail-form form .inputs-container {
   display: flex;
   flex-direction: column;
@@ -165,5 +169,27 @@ function submit() {
 .card-detail-form form .inputs-container .inputs-row {
   display: flex;
   justify-content: space-between;
+}
+@media (min-width: 1100px) {
+  .card-detail-form {
+    align-items: center;
+    margin-top: 0;
+  }
+  .card-detail-form form {
+    max-width: 381px;
+  }
+  .card-detail-form form .button {
+    margin-top: 40px;
+  }
+  .card-detail-form form .inputs-container {
+    row-gap: 26px;
+  }
+  .card-detail-form form .inputs-container .inputs-row {
+    justify-content: unset;
+  }
+
+  .card-detail-form form .inputs-container .inputs-row .input-cvc {
+    margin-left: auto;
+  }
 }
 </style>
